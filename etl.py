@@ -59,23 +59,30 @@ def load_data(destination, transformed_data):
     print("Loaded to sqlite table")
 
 
+def log_progress(msg):
+    timestamp_format = '%Y-%h-%d-%H:%M:%S'
+    now = datetime.now()
+    timestamp = now.strftime(timestamp_format)
+
+    with open(log_file, "a") as logs:
+        logs.write(timestamp + "," + msg + "\n")
 
 
 
 
 ######## Begin ETL ###########
-print("Beginning ETL process")
+log_progress("Beginning ETL process")
 extracted_data = extract()
 
-print("Extract completed \n")
-print("Beginning transformation \n")
+log_progress("Extract completed \n")
+log_progress("Beginning transformation \n")
 
 transformed_data = transform(extracted_data)
 
 
-print("Transformation completed \n")
-print("Beginning Load \n")
+log_progress("Transformation completed \n")
+log_progress("Beginning Load \n")
 
 load_data(final_result, transformed_data)
 
-print("Data loaded to csv file")
+log_progress("Data loaded to csv file")
